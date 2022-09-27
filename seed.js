@@ -1,6 +1,6 @@
 const { user } = require('pg/lib/defaults');
 const {
-    db, User, Post
+    db, User, Post, Group, UserGroup
 } = require('./db');
 
 const seedDb = async () => {
@@ -28,6 +28,9 @@ const seedDb = async () => {
     const Promises = users.map((user) => User.create(user));
     //async action that wait for each single element in the array to be finished
     const[louis, ben] = await Promise.all(Promises);*/
+    //const users = await Promise.all(Promises);
+    //const louis = user[0];
+    //const ben = user[1];
 
     const start = new Date()
 
@@ -58,6 +61,26 @@ const seedDb = async () => {
         content: "Louis is awesome",
         userId: Ben.id
     });
+
+    const group1 = await Group.create({
+        name: 'Group1'
+    });
+
+    const group2 = await Group.create({
+        name:'Group2'
+    })
+
+    await Louis.setGroups([group1, group2]);
+
+    await UserGroup.create({
+        userId: Louis.id,
+        GroupId: group1.id
+    })
+
+    await UserGroup.create({
+        userId: Louis.id,
+        GroupId:group2.id
+    })
 
     const end = new Date();
     console.log(end - start);

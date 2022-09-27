@@ -65,6 +65,18 @@ const User = db.define('user', {
             'user'
         ]),
     }
+});
+
+const Group = db.define('Group', {
+    name: {
+        type: Sequelize.STRING,
+        allowNull:false
+    },
+    //override id
+    /*customId: {
+        type: Sequelize.UUIDV4,
+        primaryKey:true
+    }*/
 })
 
 const Post = db.define('post',{
@@ -79,11 +91,24 @@ const Post = db.define('post',{
     
 });
 
+const UserGroup = db.define('userGroup',{})
+
 User.hasMany(Post);//UserId and PostId filed is automatically created when the relationship is created
 Post.belongsTo(User);
+
+//many-to-many-invisible table 'userGroup'
+//userId | groupId
+// 2     |    1
+// 1     |    1
+
+//[user1, user 2] -- group 1
+User.belongsToMany(Group, {through: 'userGroup'});
+Group.belongsToMany(User, {through: 'userGroup'});
 
 module.exports = {
     db,
     User,
-    Post
+    Post,
+    Group,
+    UserGroup
 }
