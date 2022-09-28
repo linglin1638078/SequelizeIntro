@@ -3,13 +3,7 @@ const {
     db, User, Post, Group, UserGroup
 } = require('./db');
 
-const seedDb = async () => {
-    //Connects your database
-    ///and clears everything out -clear all data
-    //db is client
-    await db.sync({ force: true, logging: false });
-
-    //will run way faster than write inidivual async await for each user
+  //will run way faster than write inidivual async await for each user
     /*const users = [
         {
             firstName: 'Louis',
@@ -23,11 +17,21 @@ const seedDb = async () => {
             role: 'user'
     
         }
-    ];
+    ];*/
+
+const seedDb = async () => {
+    //Connects your database
+    ///and clears everything out -clear all data
+    //db is client
+    await db.sync({ force: true, logging: false });
+
+  
     //all promises will be saved in an array before returning back
-    const Promises = users.map((user) => User.create(user));
+   // const Promises = users.map((user) => User.create(user));
+
     //async action that wait for each single element in the array to be finished
-    const[louis, ben] = await Promise.all(Promises);*/
+    
+    //const [louis, ben] = await Promise.all(Promises);* /
     //const users = await Promise.all(Promises);
     //const louis = user[0];
     //const ben = user[1];

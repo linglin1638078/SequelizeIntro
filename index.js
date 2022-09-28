@@ -30,6 +30,21 @@ app.get('/', async(req, res, next) => {
 
 })
 
+app.get('/group', async (req, res, next) => {
+    const group = await Group.findAll();
+    res.send(group);
+});
+
+app.put('/group/:id', async (req, res, next) => {
+    const group = await Group.update({
+        name: req.body.name
+    }, {
+        where: {
+            id: req.params.id
+        }
+    })
+});
+
 app.get('/users', async (req, res, next) => {
     const users = await User.findAll({
         include: [Group]
