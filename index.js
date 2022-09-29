@@ -1,11 +1,18 @@
+//localhost:3000
 const express = require('express');
 const app = express();
 
 const {
     Post,
     User,
-    Group
+    Group,
+    Comment
 } = require('./db');
+
+app.use(express.urlencoded({ extended: false }));
+
+const apiRouter = require('./api');
+app.use('/api', apiRouter);
 
 app.get('/', async(req, res, next) => {
     const posts = await Post.findAll({
@@ -45,33 +52,9 @@ app.put('/group/:id', async (req, res, next) => {
     })
 });
 
-app.get('/users', async (req, res, next) => {
-    const users = await User.findAll({
-        include: [Group]
-    });
 
-    res.send(users);
-})
 
-app.get('/users/:id', async (req, res, next) => {
-    const users = await User.findByPk(+req.params.id, {
-        include: [Group]
-    });
 
-    res.send(users);
-})
-
-app.get('/users/:id/groups', async (req, res, next) => {
-    /*const groups = await Group.findAll({
-        where: {
-            id: +req.params.id
-        }
-    });*/
-    const user = await User.findByPk(+req.params.id);
-    const groups = await user.getGroups()
-    
-    res.send(groups)
-})
 
 app.put('/posts/:id', async(req, res, next) => {
     const foundPost = await Post.findByPk(+req.params.id);
