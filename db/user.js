@@ -64,6 +64,10 @@ const User = db.define('user', {
             'admin',
             'user'
         ]),
+    },
+    hidden: {
+        type: Sequelize.BOOLEAN,
+        defaultValue:false
     }
 });
 

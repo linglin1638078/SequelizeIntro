@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const volleyball = require('volleyball');
 const db = require('./db');
 
 const User = require('./user');
